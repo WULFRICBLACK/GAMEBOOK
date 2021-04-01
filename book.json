@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "title": "The Louvres' scare",
+    "author": "Claude Delafosse translated by group 3",
+    "description": "Mysterious thefts in series take place at the Louvre Museum in Paris. You are a student, and that day, with your class, you are visiting this museum."
+  },
+  "pages": {
+    "0": {
+      "description": "this is the very long content of a page",
+      "options": [
+        {
+          "description": "Take door A",
+          "target": 2
+        },
+        {
+          "description": "Take door B",
+          "target": 3
+        }
+      ]
+    },
+    "1": {
+      "name": "page1",
+      "options": [
+        {
+          "description": "folow the men",
+          "target": 2
+        },
+        {
+          "description": "Continue the tour with your class.",
+          "target": 5
+        }
+      ],
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id est enim, de quo quaerimus. Hoc non est positum in nostra actione. Quia dolori non voluptas contraria est, sed doloris privatio. Eam tum adesse, cum dolor omnis absit; Itaque nostrum est-quod nostrum dico, artis est-ad ea principia, quae accepimus. Duo Reges: constructio interrete. In quo etsi est magnus, tamen nova pleraque et perpauca de moribus. An potest cupiditas finiri? Ex eorum enim scriptis et institutis cum omnis doctrina liberalis, omnis historia. Nam si amitti vita beata potest, beata esse non potest."
+    },
+    "2": {
+      "name": "page2",
+      "options": [
+        {
+          "description": "folow the man",
+          "target": 2
+        },
+        {
+          "description": "Continue the tour with your class.",
+          "target": 5
+        }
+      ],
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id est enim, de quo quaerimus. Hoc non est positum in nostra actione. Quia dolori non voluptas contraria est, sed doloris privatio. Eam tum adesse, cum dolor omnis absit; Itaque nostrum est-quod nostrum dico, artis est-ad ea principia, quae accepimus. Duo Reges: constructio interrete. In quo etsi est magnus, tamen nova pleraque et perpauca de moribus. An potest cupiditas finiri? Ex eorum enim scriptis et institutis cum omnis doctrina liberalis, omnis historia. Nam si amitti vita beata potest, beata esse non potest."
+    },
+    "3": {
+      "description": "exit",
+      "options": []
+    },
+    "4": {
+      "description": "wait why did you choose this ?",
+      "options": []
+    }
+  },
+  "additional improvements": {
+    "randomness": null,
+    "addItems": [],
+    "removeItems": [],
+    "requireItems": [],
+    "player": {
+      "inventory": [
+        "screwdriver",
+        "stinky ball",
+        "watch",
+        "flashlight",
+        "banana",
+        "pepper candy"
+      ],
+      "visitedPages": [
+        0,
+        1,
+        5,
+        2,
+        4
+      ]
+    }
+  }
+}

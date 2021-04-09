@@ -4,16 +4,16 @@ import os
 # %%
 def openBook(fileName):
     with open(fileName, 'r') as f:
-        data = json.load(f)
-    return data
+        book = json.load(f)
+    return book
 
 
 # %%
-def saveBook(fileName, data):
-    # print(json.dumps(data, indent=2, ensure_ascii=False))
+def saveBook(fileName, book):
+    # print(json.dumps(book, indent=2, ensure_ascii=False))
     print("saving…")
     with open(fileName, 'w+') as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
+        json.dump(book, f, indent=2, ensure_ascii=False)
 
 # %%
 def start():
@@ -32,7 +32,7 @@ def start():
                 elif not os.path.isfile(fileName):  # check if the file exists
                     print("No such file in directory.")
                 else:
-                    editbook(fileName)
+                    editBook(fileName)
                     ex = True
                     break
             if ex:
@@ -51,26 +51,26 @@ def createBook():
         #     print("A file with this name already exists.")
         break # removed line and add comments to the code at the end of the project
     # %%
-    data = {}
-    data['meta'] = {}
-    data['meta']['title'] = title
-    data['meta']['author'] = input("Who is the gamebook's author? ")
-    data['meta']['summary'] = input("What is the gamebook's summary? ")
-    data['pages'] = {}
+    book = {}
+    book['meta'] = {}
+    book['meta']['title'] = title
+    book['meta']['author'] = input("Who is the gamebook's author? ")
+    book['meta']['summary'] = input("What is the gamebook's summary? ")
+    book['pages'] = {}
 
-    saveBook(fileName, data)
-    editbook(fileName)
+    saveBook(fileName, book)
+    editBook(fileName)
 
 # %%
-def editbook(fileName):
+def editBook(fileName):
     while True:
-        data = openBook(fileName)
+        book = openBook(fileName)
         pageNumber = 0
         while True:
-            if not str(pageNumber) in data['pages']:
+            if not str(pageNumber) in book['pages']:
                 break
             pageNumber += 1
-        description = input("What is the content of page "+str(pageNumber)+"? ")
+        content = input("What is the content of page "+str(pageNumber)+"? ")
         options = []
         for ordinalNumeral in ["1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th"]:
             optionDescription = input("What is option "+str(pageNumber)+"'s "+ordinalNumeral+" description (or exit)? ")
@@ -81,11 +81,11 @@ def editbook(fileName):
             target = checkNumber("What is the "+ordinalNumeral+" option leading to? ")
             options.append({"description": optionDescription, "target": target})
 
-        data['pages'][str(pageNumber)] = {}
-        data['pages'][str(pageNumber)]['description'] = description
-        data['pages'][str(pageNumber)]['options'] = options
-        print(json.dumps(data, indent=2, ensure_ascii=False))
-        saveBook(fileName, data)
+        book['pages'][str(pageNumber)] = {}
+        book['pages'][str(pageNumber)]['content'] = content
+        book['pages'][str(pageNumber)]['options'] = options
+        print(json.dumps(book, indent=2, ensure_ascii=False))
+        saveBook(fileName, book)
         break
 
 # %%

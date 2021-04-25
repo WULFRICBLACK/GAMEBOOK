@@ -1,13 +1,14 @@
 import json
 import os
 
+# %%
 def openBook(fileName):
-    with open(fileName, 'r') as f:
+    with open(fileName, 'r', encoding ='utf8') as f:
         book = json.load(f)
     return book
 
 # %%
-def i():
+def iDontKnowWhatToCallYou():
     page = 0
     while True:
         print(book['pages'][str(page)]['content'])
@@ -16,14 +17,14 @@ def i():
             for target, option in zip(targets, [option['description'] for option in book['pages'][str(page)]['options']]):
                 print(target, option)
 
-            currentPage = int(input("Whih page do you want to go to? "))
+            currentPage = int(input("Which page do you want to go to? ")) # make sure the input is a number !Δ!
             if currentPage in targets:
                 page = currentPage
                 break
             else:
                 print("This isn't part of the options\n")
 
-
+# %%
 
 while True:
     title = input("What is the gamebook's filename? ")
@@ -37,12 +38,9 @@ while True:
 print("\n", "Title: " + book['meta']['title'],  "Author: " + book['meta']['author'], book['meta']['summary'], "\n", sep="\n")
 
 if book['meta']['checked'] == True:
-    i()
+    iDontKnowWhatToCallYou()
 else:
-    print("the book hasn't been checked for errors go to the bookCreator and check it!")
-
-
-
+    print("The book hasn't been checked for errors go to the bookCreator and check it!")
 
 
 
@@ -51,14 +49,6 @@ else:
 # previous = 0
 # cur = int(input("name the page: "))
 
-# for option in book['pages']['0']['options']:
-#     if cur == option['target']:
-#         print(book['pages'][str(cur)]['content'])
-#         break
-# # cannot easily add else outside of loop
-
-
-# # however, using lists comprehension
 # if cur in [option['target'] for option in book['pages'][str(previous)]['options']]:
 #     print(book['pages'][str(cur)]['content'])
 # else:

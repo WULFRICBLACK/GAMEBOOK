@@ -1,17 +1,19 @@
+# -*- coding: utf-8 -*-
 import json
 import os
 
 # %%
 def openBook(fileName):
-    with open(fileName, 'r', encoding ='utf8') as f:
+    with open(fileName, 'r', encoding='utf8') as f:
         book = json.load(f)
     return book
 
 # %%
 def saveBook(fileName, book):
     # print(json.dumps(book, indent=2, ensure_ascii=False))
-    print("saving…") # for debug purpose only!
-    with open(fileName, 'w+', encoding ='utf8') as f:
+    print("saving…")  # for debug purpose only! or not after all.
+    book['meta']['checked'] = checkReadability(book)
+    with open(fileName, 'w+', encoding='utf8') as f:
         json.dump(book, f, indent=2, ensure_ascii=False)
 
 # %%
@@ -29,10 +31,16 @@ def checkNumber(question):
 
 # %%
 def checkReadability(book):
+    pages = [page for page in book['pages']]
+    for page in pages:
+        for option in book['pages'][page]['options']:
+            if not str(option['target']) in pages:
+                return False
     return True
 
 # %%
 def start():
+    print("Remember that at any point you can type 'exit' to go back to a lower level question or to exit the program.")
     while True:
         choice = input("Do you want to create a new gamebook (1) or edit one (2)? ")
         if choice == "1":
@@ -42,7 +50,7 @@ def start():
             while True:
                 title = input("What is the gamebook's filename? ")
                 fileName = title+".json"
-                if not os.path.isfile(fileName): # check if the file exists
+                if not os.path.isfile(fileName):  # check if the file exists
                     print("No such file in directory.")
                 else:
                     editBook(fileName, False)
@@ -56,15 +64,15 @@ def createBook():
         while True:
             title = input("What is the gamebook's title? ")
             if any((char in set('<|:>/"?*\\')) for char in title):
-                print('These characters cannot be used for filenames: \ / : * ? " < > |')
+                print('These characters cannot be used for filenames: \\ / : * ? " < > |')
             else:
                 break
         fileName = title+".json"
-        if not os.path.isfile(fileName): # check if the file exists
+        if not os.path.isfile(fileName):  # check if the file exists
             break
         else:
             print("A file with this name already exists.")
-            break # remove this line for final project, so that books cannot be overwritten (debug)
+            break  # remove this line for final project, so that books cannot be overwritten (debug)
     book = {}
     book['meta'] = {}
     book['meta']['title'] = title
@@ -102,35 +110,84 @@ def addPage(book):
         book['pages'][str(pageNumber)] = {}
         book['pages'][str(pageNumber)]['content'] = content
         book['pages'][str(pageNumber)]['options'] = options
-        print(json.dumps(book, indent=2, ensure_ascii=False)) # for debug purpose only!
+        print(json.dumps(book, indent=2, ensure_ascii=False))  # for debug purpose only!
         return book
 
 # %%
-def editBook(fileName, autoAddPage):
+def editPage(book, fileName):
+    while True:
+        page = input("Which page do you want to edit? ")
+        if page in book['pages']:
+            while True:
+                choice = input("Do you want to edit page "+page+"'s content (1), it's options (2) or delete it (3)? ")
+                if choice == "1":
+                    info = input("Here is the old content of page "+page+":\n"+book['pages'][page]['content']+"\nWhat do you want to replace it with ?\n")
+                    if not info == "exit":
+                        book['pages'][page]['content'] = info
+                elif choice == "2":
+                    options = book['pages'][page]['options']
+                    if options:  # if list options not empty
+                        print("\nHere are the options:") if len(options) >= 2 else print("\nHere is the option:")
+                        for option in options:
+                            print(option['target'], option['description'])
+                        while True:
+                            if len(options) >= 2:
+                                choice = input("Do you want to edit the existing option (1), delete it (2) or add new ones (3)? ")
+                                pass
+                            else:
+                                choice = input("Do you want to edit one of the existing options (1), delete one of them (2) or add new ones (3)? ")
+                                pass
+                    else:
+                        pass
+                elif choice == "3":
+                    confirm = input("Are you certain you want to delete page "+page+" (y)? ")
+                    if confirm == "y" or confirm == "yes":
+                        del book['pages'][page]
+                        saveBook(fileName, book)
+                        print("Page "+page+" was successfuly deleted.")
+                        break
+                elif choice == "exit":
+                    break
+                else:
+                    print("Try again.")
+        elif page == "exit":
+            break
+        else:
+            print("This page isn't part of the gamebook.")
+
+# %%
+def editBook(fileName, goToAddPage):
     book = openBook(fileName)
     while True:
-        if autoAddPage:
+        if goToAddPage:
             saveBook(fileName, addPage(book))
 
-        choice = input("Do you want to:\n(1) Add new pages to this gamebook,\n(2) edit a specific page,\n(3) change it's title, author or summary,\nor save and 'exit' the program?\n")
+        choice = input("Do you want to:\n(1) Add new pages to this gamebook,\n(2) edit a specific page\n(3) or change it's title, author or summary\n")
         if choice == "1":
             book = addPage(book)
         elif choice == "2":
-            pass
-            # editPage(book)
+            editPage(book, fileName)
         elif choice == "3":
-            pass
-            # changeMeta(book)
+            while True:
+                choice = input("Do you want to edit the 'title', the 'author' or the 'summary' of the gamebook ? ")
+                if choice == 'title' or choice == 'author' or choice == 'summary':
+                    info = input("Here is the old "+choice+":\n"+book['meta'][choice]+"\nWhat do you want to replace it with ?\n")
+                    book['meta'][choice] = info
+                    break
+                elif choice == 'exit':
+                    break
+                else:
+                    print("Try again.")
         elif choice == "exit":
             if not book['meta']['checked']:
-                book['meta']['checked'] = checkReadability(book)
                 saveBook(fileName, book)
             return
         else:
             print("This is not a 1, 2, 3 or exit.")
             continue
-        book['meta']['checked'] = checkReadability(book)
         saveBook(fileName, book)
 
 
+# book = openBook("book.json")
+# print(editPage(book, "book.json"))
 start()

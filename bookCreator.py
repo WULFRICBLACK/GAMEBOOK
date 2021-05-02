@@ -20,9 +20,9 @@ def saveBook(fileName, book):
 def checkNumber(question):
     while True:
         try:
-            i = int(input(question))
-            if i >= 0:
-                return i
+            number = int(input(question))
+            if number >= 0:
+                return number
             else:
                 print("There is no such thing as negative pages in a book.")
         except Exception:
@@ -42,7 +42,7 @@ def checkReadability(book):
 def start():
     print("Remember that at any point you can type 'exit' to go back to a lower level question or to exit the program.")
     while True:
-        choice = input("Do you want to create a new gamebook (1) or edit one (2)? ")
+        choice = input("(1) Create a new gamebook\n(2) or edit one ?\n ")
         if choice == "1":
             createBook()
             break
@@ -85,6 +85,15 @@ def createBook():
     editBook(fileName, True)
 
 # %%
+def deleteOption(fileName, book, page, optionToDelete, name):
+    confirm = input("Are you certain you want to delete "+name+" (y)? ")
+    if confirm == "y" or confirm == "yes":
+        del book['pages'][page]['options'][optionToDelete]
+        saveBook(fileName, book)
+        print(name.capitalize()+" was successfuly deleted.")
+    return book
+
+# %%
 def addPage(book):
     while True:
         pageNumber = 0
@@ -119,33 +128,64 @@ def editPage(book, fileName):
         page = input("Which page do you want to edit? ")
         if page in book['pages']:
             while True:
-                choice = input("Do you want to edit page "+page+"'s content (1), it's options (2) or delete it (3)? ")
+                choice = input("(1) Edit page "+page+"'s content,\n(2) it's options\n(3) or delete it?\n ")
                 if choice == "1":
                     info = input("Here is the old content of page "+page+":\n"+book['pages'][page]['content']+"\nWhat do you want to replace it with ?\n")
                     if not info == "exit":
                         book['pages'][page]['content'] = info
                 elif choice == "2":
                     options = book['pages'][page]['options']
-                    if options:  # if list options not empty
-                        print("\nHere are the options:") if len(options) >= 2 else print("\nHere is the option:")
+                    if options:  # if options not empty
+                        print("\nHere is the option:") if len(
+                            options) == 1 else print("\nHere are the options:")
                         for option in options:
                             print(option['target'], option['description'])
                         while True:
-                            if len(options) >= 2:
-                                choice = input("Do you want to edit the existing option (1), delete it (2) or add new ones (3)? ")
-                                pass
+                            if len(options) == 1:
+                                choice = input("(1) Edit the existing option,\n(2) delete it\n(3) or add new ones?\n ")
                             else:
-                                choice = input("Do you want to edit one of the existing options (1), delete one of them (2) or add new ones (3)? ")
-                                pass
+                                choice = input("(1) Edit one of the options,\n(2) delete one\n(3) or add new ones?\n ")
+                            if choice == "1":
+                                pass  # edit option(s)
+                            elif choice == "2":
+                                if len(options) == 1:
+                                    optionToDelete = 0
+                                    name = "this remaining option with target "+str(options[0]['target'])
+                                else:
+                                    while True:
+                                        try:
+                                            target = int(input("What is the taget of the option you want to delete? "))
+                                            for index, option in enumerate(options):
+                                                if target == option['target']:
+                                                    optionToDelete = index
+                                                    name = "option "+str(target)
+                                                    break
+                                            if target == option['target']:
+                                                break
+                                            print("This is not part of the options.")
+                                        except Exception:
+                                            print("This is not a number.")
+                                book = deleteOption(fileName, book, page, optionToDelete, name)
+                                if not [option for option in book['pages'][page]['options']]:  # if list is empty
+                                    break
+                            elif choice == "3":
+                                pass  # add options
+                            elif choice == "exit":
+                                break
+                            else:
+                                print("This is not a 1, 2, 3 or 'exit'.")
                     else:
-                        pass
+                        pass  # add options
                 elif choice == "3":
-                    confirm = input("Are you certain you want to delete page "+page+" (y)? ")
+                    if page != "0":
+                        confirm = input("Are you certain you want to delete page "+page+" (y)? ")
                     if confirm == "y" or confirm == "yes":
                         del book['pages'][page]
                         saveBook(fileName, book)
                         print("Page "+page+" was successfuly deleted.")
                         break
+                    else:
+                        print("You can't delete page 0.")
                 elif choice == "exit":
                     break
                 else:
@@ -162,7 +202,7 @@ def editBook(fileName, goToAddPage):
         if goToAddPage:
             saveBook(fileName, addPage(book))
 
-        choice = input("Do you want to:\n(1) Add new pages to this gamebook,\n(2) edit a specific page\n(3) or change it's title, author or summary\n")
+        choice = input("(1) Add new pages to this gamebook,\n(2) edit a specific page\n(3) or change it's title, author or summary?\n ")
         if choice == "1":
             book = addPage(book)
         elif choice == "2":
@@ -174,7 +214,7 @@ def editBook(fileName, goToAddPage):
                     info = input("Here is the old "+choice+":\n"+book['meta'][choice]+"\nWhat do you want to replace it with ?\n")
                     book['meta'][choice] = info
                     break
-                elif choice == 'exit':
+                elif choice == "exit":
                     break
                 else:
                     print("Try again.")
@@ -183,7 +223,7 @@ def editBook(fileName, goToAddPage):
                 saveBook(fileName, book)
             return
         else:
-            print("This is not a 1, 2, 3 or exit.")
+            print("This is not a 1, 2, 3 or 'exit'.")
             continue
         saveBook(fileName, book)
 

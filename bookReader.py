@@ -17,14 +17,19 @@ def iDontKnowWhatToCallYou():
             targets = [option['target'] for option in book['pages'][page]['options']]
             for target, option in zip(targets, [option['description'] for option in book['pages'][page]['options']]):
                 print(target, option)
-            if book['pages'][page]['options'] != None:
-                pass
+            if not book['pages'][page]['options']:  # if no options => end of book
+                return
+            elif len(book['pages'][page]['options']) == 1:
+                _ = input("Clic enter to go to the next page.\n")
+                page = str(target)
+                break
+            else:
                 currentPage = input("Which page do you want to go to? ")
-            if currentPage in targets:
+            if currentPage in str(targets):
                 page = currentPage
                 break
             else:
-                print("This isn't part of the options\n")
+                print("This isn't part of the options.\n")
 
 # %%
 while True:

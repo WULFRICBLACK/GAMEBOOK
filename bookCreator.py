@@ -29,6 +29,7 @@ def checkNumber(question):
 
 # %%
 def checkReadability(book):
+    
     return True
 
 # %%

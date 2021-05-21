@@ -3,48 +3,74 @@ import os
 
 # %%
 def openBook(fileName):
-    with open(fileName, 'r', encoding ='utf8') as f:
+    with open(fileName, 'r', encoding='utf8') as f:
         book = json.load(f)
     return book
 
-# %%
-def iDontKnowWhatToCallYou():
-    page = 0
-    while True:
-        print(book['pages'][str(page)]['content'])
-        while True:
-            targets = [option['target'] for option in book['pages'][str(page)]['options']]
-            for target, option in zip(targets, [option['description'] for option in book['pages'][str(page)]['options']]):
-                print(target, option)
 
-            currentPage = int(input("Which page do you want to go to? ")) # make sure the input is a number !Δ!
-            if currentPage in targets:
+def saveBook(fileName, book):
+    # print(json.dumps(book, indent=2, ensure_ascii=False))
+    print("saving…") # for debug purpose only!
+    with open(fileName, 'w+', encoding ='utf8') as f:
+        json.dump(book, f, indent=2, ensure_ascii=False)
+
+# %%
+def bookPlayer():
+    page = "0"
+    while True:
+        print(book['pages'][page]['content'])
+        while True:
+            targets = [option['target'] for option in book['pages'][page]['options']]
+            for target, option in zip(targets, [option['description'] for option in book['pages'][page]['options']]):
+                print(target, option)
+                saveBook(filename,book)
+            if not book['pages'][page]['options']:  # if no options => end of book
+                return
+            elif len(book['pages'][page]['options']) == 1:
+                _ = input("Clic enter to go to the next page.\n")
+                page = str(target)
+                break
+            else:
+                currentPage = input("Which page do you want to go to? ")
+            if currentPage in str(targets):
                 page = currentPage
                 break
             else:
-                print("This isn't part of the options\n")
+                print("This isn't part of the options.\n")
 
 # %%
+while True:   
+    while True:
+        title = input("What is the gamebook's filename? ")
+        fileName = title+".json"
+        if not os.path.isfile(fileName):  # check if the file exists
+            print("No such file in directory.")
+        else:
+            book = openBook(fileName)
+            break
 
-while True:
-    title = input("What is the gamebook's filename? ")
-    fileName = title+".json"
-    if not os.path.isfile(fileName):  # check if the file exists
-        print("No such file in directory.")
+    print("\n", "Title: "+book['meta']['title'], "Author: "+book['meta']['author'], book['meta']['summary'], "\n", sep="\n")
+
+    if book['meta']['checked'] == True:
+        bookPlayer()
+        exit = False
+        while True:
+            choice = input("Do you wish to play the gamebook again (Type play ) or run another gamebook(Type restart) or exit the program(Type exit)")
+            if choice =="play":
+                bookPlayer()
+            elif choice== 'restart':
+                break
+            elif choice=='exit':
+                exit=True
+                break
+            else:
+                print("Not valid option among play restart and exit")
+        if exit:
+            break    
+
+                  
     else:
-        book = openBook(fileName)
-        break
-
-print("\n", "Title: " + book['meta']['title'],  "Author: " + book['meta']['author'], book['meta']['summary'], "\n", sep="\n")
-
-if book['meta']['checked'] == True:
-    iDontKnowWhatToCallYou()
-else:
-    print("The book hasn't been checked for errors go to the bookCreator and check it!")
-
-
-
-
+        print("The book hasn't been checked for errors go to the bookCreator and check it!")
 
 # previous = 0
 # cur = int(input("name the page: "))

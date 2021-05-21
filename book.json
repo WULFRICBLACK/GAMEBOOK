@@ -7,20 +7,16 @@
   },
   "pages": {
     "0": {
-      "content": "Itaque nostrum est-quod nostrum dico, artis est-ad ea principia, quae accepimus. Duo Reges: constructio interrete. In quo etsi est magnus, tamen nova pleraque et perpauca de moribus. An potest cupiditas finiri? Ex eorum enim scriptis et institutis cum omnis doctrina liberalis, omnis historia. Nam si amitti vita beata potest, beata esse non potest.",
+      "content": "WElcome to The Louvre's fear. In this comic book you'll face dangers and adventures, you have to make choices.You are the hero/heroine. If you stuck, prisoned,lost or tied up dont't hessitate to restart the game and choose otheroptions. \n you will be objects write the 3 of them down on paper which will help you ahead \n 1)Screwdriver, Watch, torch, Banana , perfume, pepper cand and a stnky ball",
       "options": [
         {
-          "description": "Take door A",
+          "description": "Move to next Page",
           "target": 1
-        },
-        {
-          "description": "Take door B",
-          "target": 2
         }
       ]
     },
     "1": {
-      "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Id est enim, de quo quaerimus. Hoc non est positum in nostra actione. Quia dolori non voluptas contraria est, sed doloris privatio. Eam tum adesse, cum dolor omnis absit.",
+      "content": "You are on tour in the Louvre's Museum with your class.You put your stuff in locker no. 3846.\n You have reached the room full of ancient Egypt artifacts.\n While the teacher is giving a brief of the history of objects,you see a strange man who dropped a key. You called him out but he didn;t seem to listen to you ",
       "options": [
         {
           "description": "folow the man",
@@ -33,7 +29,7 @@
       ]
     },
     "2": {
-      "content": "Id est enim, de quo quaerimus. Hoc non est positum in nostra actione. Quia dolori non voluptas contraria est, sed doloris privatio. Eam tum adesse, cum dolor omnis absit.",
+      "content": "You tried to follow the man but he Disappeared. You picked the key up and you recognise it see its locker number 3847. ",
       "options": [
         {
           "description": "open the locker with the key you found",

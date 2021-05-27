@@ -80,6 +80,7 @@ def createBook():
     book['meta']['author'] = input("Who is the gamebook's author? ")
     book['meta']['summary'] = input("What is the gamebook's summary? ")
     book['meta']['checked'] = False
+    book['meta']['visitedPages'] = []
     book['pages'] = {}
 
     saveBook(fileName, book)

@@ -1,13 +1,14 @@
 {
   "meta": {
-    "title": "The Louvres' scare",
+    "title": "The Louvres' fear",
     "author": "Claude Delafosse",
     "summary": "Mysterious thefts in series take place at the Louvre Museum in Paris. You are a student, and today, you are visiting the museum with your class.",
-    "checked": true
+    "checked": true,
+    "visitedPages": []
   },
   "pages": {
     "0": {
-      "content": "Welcome to The Louvre's fear. In this comic book you will face dangers and adventures where you have to make choices to navigate the gamebook.\nNow that you are all set, choose 3 of the folowing objects and write them down, they might help you in the museum's visit.\nScrewdriver, watch, flashlight, banana, perfume, pepper candy, stinky ball.\nOnce you chose, clic enter.",
+      "content": "Welcome to The Louvre's fear. In this comic book you will face dangers and adventures where you have to make choices to navigate the gamebook.\nNow, choose three of the folowing objects which you will take with you tomorow for the museum's visit (write them down), they might help you during your visit.\nScrewdriver, watch, flashlight, banana, perfume, pepper candy, stinky ball.\n\nNow that you are all set, go to the next page by clicking the enter key.",
       "options": [
         {
           "description": "Move to the next page.",
@@ -16,7 +17,7 @@
       ]
     },
     "1": {
-      "content": "You are on tour in the Louvre's Museum with your class.You put your stuff in locker no. 3846.\n You have reached the room full of ancient Egypt artifacts.\n While the teacher is giving a brief of the history of objects, you see a strange man who dropped a key. You try to call him, but he is already too far for him to hear you.",
+      "content": "You are on tour in the Louvre's Museum with your class.You put your stuff in locker no. 3846.\nYou have reached the room full of ancient Egypt artifacts.\nWhile the teacher is giving a brief of the history of objects, you see a strange man who dropped a key. You try to call him, but he is already too far for him to hear you.",
       "options": [
         {
           "description": "If you want to folow the man.",

@@ -11,7 +11,7 @@ def openBook(fileName):
 # %%
 def saveBook(fileName, book):
     # print(json.dumps(book, indent=2, ensure_ascii=False))
-    print("saving…") # for debug purpose only!
+    print("saving…")
     with open(fileName, 'w+', encoding ='utf8') as f:
         json.dump(book, f, indent=2, ensure_ascii=False)
 

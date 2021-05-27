@@ -118,8 +118,8 @@ def addPage(book):
 
         book['pages'][pageNumber] = {}
         book['pages'][pageNumber]['content'] = content
+        book['pages'][pageNumber]['options'] = []
         book = addOptions(book, pageNumber)
-        print(json.dumps(book, indent=2, ensure_ascii=False))  # for debug purpose only!
         return book
 
 # %%
@@ -151,7 +151,7 @@ def editPage(book, fileName):
                         book['pages'][pageNumber]['content'] = info
                 elif choice == "2":
                     options = book['pages'][pageNumber]['options']
-                    if options:  # if options not empty
+                    if options:
                         printOptions(options)
                         while True:
                             if len(options) == 1:

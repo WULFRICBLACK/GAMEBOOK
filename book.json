@@ -4,7 +4,9 @@
     "author": "Claude Delafosse",
     "summary": "Mysterious thefts in series take place at the Louvre Museum in Paris. You are a student, and today, you are visiting the museum with your class.",
     "checked": true,
-    "visitedPages": []
+    "visitedPages": [
+      "0"
+    ]
   },
   "pages": {
     "0": {
@@ -25,7 +27,7 @@
         },
         {
           "description": "If you prefer to continue the tour with your class.",
-          "target": 5
+          "target": 10
         }
       ]
     },
@@ -34,15 +36,53 @@
       "options": [
         {
           "description": "If you want to go to the locker room to try the key you found on the corresponding locker.",
-          "target": 1
+          "target": 5
         },
         {
           "description": "If you prefer to continue the tour with your class.",
-          "target": 5
+          "target": 10
         }
       ]
     },
     "5": {
+      "content": "You have trached the locker room. You open the locker and you go inside. You discover the back wall of the locker opens.",
+      "options": [
+        {
+          "description": "If you picked torch in the beginiong ,Follow the passage.",
+          "target": 6
+        },
+        {
+          "description": "if you didn't take the torch",
+          "target": 9
+        }
+      ]
+    },
+    "6": {
+      "content": "On following the passage you reached the room full of ancient artifacts. You are see a man entering from another entry. He ties you up and takes you to the ancient Egypt ARtifacts room and puts you in sarcophagus ",
+      "options": [
+        {
+          "description": " If you had choosen stinky ball or perfume in the starting use it",
+          "target": 8
+        },
+        {
+          "description": "if you had not picked stinky ball or perfume, Go to",
+          "target": 7
+        }
+      ]
+    },
+    "7": {
+      "content": "You are trapped in cofin and stuck there. You didn't discover the Louvres' mistery, but you can run the gamebook again to find other endings!",
+      "options": []
+    },
+    "8": {
+      "content": " People entering the room smells something and open the sarcophagus. You recognise the man who had captured you. You report him and discover he had been stealing from louvre ",
+      "options": []
+    },
+    "9": {
+      "content": "You followed the passage, it kept getting dark and dark and dark and dark. You wake up in the locker room,thinking \n'IT WAS ALL DREAM'You didn't discover the Louvres' mistery, but you can run the gamebook again to find other endings!",
+      "options": []
+    },
+    "10": {
       "content": "You didn't discover the Louvres' mistery, but you can run the gamebook again to find other endings!",
       "options": []
     }

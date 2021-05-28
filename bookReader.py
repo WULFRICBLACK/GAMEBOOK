@@ -9,7 +9,7 @@ def openBook(fileName):
     return book
 
 # %%
-def saveBook(fileName, book):
+def saveBook(fileName, book):  # saveState(page)
     # print(json.dumps(book, indent=2, ensure_ascii=False))
     print("saving…")
     with open(fileName, 'w+', encoding ='utf8') as f:
@@ -43,13 +43,11 @@ def bookPlayer(continuePlaying, book):
         try:
             if visitedPages[-1] != page:
                 raise Exception
-        except Exception:  # InedxError (when the list is empty) is part of Exception
+        except Exception:  # InedxError (raised when the list is empty) is part of Exception
             visitedPages.append(page)
             saveBook(fileName, book)
         while True:
             targets = [option['target'] for option in book['pages'][page]['options']]
-            for target, option in zip(targets, [option['description'] for option in book['pages'][page]['options']]):
-                print(target, option)
             if not book['pages'][page]['options']:  # if no options => end of book
                 choice = input("\nYou reached the end of this gamebook! Do you want to save your storyline as a txt file (y)? ")
                 if choice == "y" or choice == "yes":
@@ -58,10 +56,14 @@ def bookPlayer(continuePlaying, book):
                 saveBook(fileName, book)
                 return
             elif len(book['pages'][page]['options']) == 1:
+                for option in [option['description'] for option in book['pages'][page]['options']]:
+                    print(option)
                 _ = input("[enter]\n")
-                page = str(target)
+                page = str(targets[0])
                 break
             else:
+                for target, option in zip(targets, [option['description'] for option in book['pages'][page]['options']]):
+                    print(target, option)
                 currentPage = input("Which page do you want to go to? ")
             if currentPage in [str(i) for i in targets]:  # or if any(currentPage in str(i) for i in tartets):
                 page = currentPage
@@ -72,7 +74,7 @@ def bookPlayer(continuePlaying, book):
 # %%
 while True:
     while True:
-        title = input("What is the gamebook's filename? ")
+        title = input("What is the gamebook's filename (without extention)? ")
         fileName = title+".json"
         if not os.path.isfile(fileName):  # check if the file exists
             print("No such file in directory.")
